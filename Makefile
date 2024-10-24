@@ -9,4 +9,4 @@ publish: # Publish is publish
 	npm publish --dry-run
 
 lint: # Eslint
-	npx eslint
+	npx eslint .
