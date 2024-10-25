@@ -3,6 +3,9 @@ import readlineSync from 'readline-sync';
 import welcome from '../src/cli.js';
 
 const gcd = (a, b) => {
+  if (a === 0 && b === 0) return NaN;
+  if (a === 0 || b === 0) return a !== 0 ? a : b;
+
   if (a >= b) {
     if (a % b === 0) {
       return b;
@@ -22,6 +25,9 @@ const playBrainGcd = (userName = welcome()) => {
   for (let i = 0; i < 3; i += 1) {
     const question = [Math.round(Math.random() * 50), Math.round(Math.random() * 50)];
     const rightAnswer = gcd(...question);
+    gcd(0, 0);
+    gcd(0, 19);
+    gcd(19, 0);
     console.log(`Question: ${question.join(' ')}`);
     const answer = readlineSync.question('Your answer: ');
     if (rightAnswer === parseInt(answer, 10)) {
