@@ -3,7 +3,7 @@ import readlineSync from 'readline-sync';
 import welcome from "../src/cli.js";
 
 const gcd = (a, b) => {
-    if (a > b) {
+    if (a >= b) {
         if (a % b === 0) {
             return b;
         }
