@@ -24,8 +24,8 @@ const playBrainGcd = (userName = welcome()) => {
         const question = [Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)];
         const rightAnswer = gcd(...question);
         console.log(`Question: ${question.join(" ")}`);
-        const answer = parseInt(readlineSync.question("Your answer: "));
-        if (rightAnswer === answer) {
+        const answer = readlineSync.question("Your answer: ");
+        if (rightAnswer === parseInt(answer)) {
             console.log("Correct!");
         }
         else {

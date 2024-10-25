@@ -14,13 +14,13 @@ const playBrainProgression = (userName = welcome()) => {
     console.log("What number is missing in the progression?")
 
     for (let i = 0; i < 3; i += 1) {
-        const progression = arithmeticProgression(10, Math.floor(Math.random() * 100), Math.floor(Math.random() * 100))
+        const progression = arithmeticProgression(10, Math.floor(Math.random() * 10), Math.floor(Math.random() * 10) + 1)
         const numberIndex = parseInt(Math.random() * 10);
         const question = progression.map((element) => element == progression[numberIndex] ? ".." : element);
         const rightAnswer = progression[numberIndex];
         console.log(`Question: ${question.join(" ")}`);
-        const answer = parseInt(readlineSync.question("Your answer: "));
-        if (rightAnswer === answer) {
+        const answer = readlineSync.question("Your answer: ");
+        if (rightAnswer === parseInt(answer)) {
             console.log("Correct!");
         }
         else {

@@ -26,8 +26,8 @@ const playBrainCalc = (userName = welcome()) => {
         const operationIndex = parseInt(Math.random() * 3);
         const rightAnswer = operations[operationIndex].lambda(number1, number2)
         console.log(`Question: ${number1} ${operations[operationIndex].operation} ${number2}`);
-        const answer = parseInt(readlineSync.question("Your answer: "));
-        if (rightAnswer === answer) {
+        const answer = readlineSync.question("Your answer: ");
+        if (rightAnswer === parseInt(answer)) {
             console.log("Correct!");
         }
         else {
