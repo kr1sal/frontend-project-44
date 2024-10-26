@@ -3,7 +3,7 @@ import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-gam
 import Action from '../action.js';
 
 const isPrime = (number) => {
-  if (number === 0) return false;
+  if (number === 0 || number === 1) return false;
 
   for (let i = 2; i < number / 2; i += 1) {
     if (number % i === 0) {
