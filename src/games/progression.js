@@ -35,7 +35,7 @@ const playBrainProgression = (userName) => {
   const winAction = new Action();
   winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
 
-  playBrainGame(startAction, iterAction, winAction);
+  return playBrainGame(startAction, iterAction, winAction);
 };
 
 export default playBrainProgression;

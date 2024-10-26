@@ -20,9 +20,6 @@ const playBrainGcd = (userName) => {
       num1: Math.round(Math.random() * 50),
       num2: Math.round(Math.random() * 50),
     };
-    getGcd(0, 1);
-    getGcd(19, 0);
-    getGcd(0, 0);
     const rightAnswer = getGcd(...Object.values(numbersCouple));
 
     console.log(`Question: ${Object.values(numbersCouple).join(' ')}`);

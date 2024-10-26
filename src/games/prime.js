@@ -4,7 +4,6 @@ import Action from '../action.js';
 
 const isPrime = (number) => {
   if (number === 0) return false;
-  if (number === 1) return true;
 
   for (let i = 2; i < number / 2; i += 1) {
     if (number % i === 0) {
@@ -20,10 +19,10 @@ const playBrainPrime = (userName) => {
 
   const iterAction = new Action();
   iterAction.lambda = () => {
-    const question = Math.floor(Math.random() * 100);
-    const rightAnswer = isPrime(question) ? 'yes' : 'no';
+    const number = Math.floor(Math.random() * 100);
+    const rightAnswer = isPrime(number) ? 'yes' : 'no';
 
-    console.log(`Question: ${question}`);
+    console.log(`Question: ${number}`);
     const userAnswer = readlineSync.question('Your answer: ');
     responseToUserAnswer(rightAnswer, userAnswer, userName);
     if (!compareAnswer(rightAnswer, userAnswer)) {
@@ -34,7 +33,7 @@ const playBrainPrime = (userName) => {
   const winAction = new Action();
   winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
 
-  playBrainGame(startAction, iterAction, winAction);
+  return playBrainGame(startAction, iterAction, winAction);
 };
 
 export default playBrainPrime;
