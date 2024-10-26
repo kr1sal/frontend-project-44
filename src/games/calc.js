@@ -1,5 +1,5 @@
 import readlineSync from 'readline-sync';
-import playBrainGame from '../brain-game.js';
+import { compareAnswer, playBrainGame, responseToUserAnswer } from '../brain-game.js';
 import Action from '../action.js';
 
 const operations = [
@@ -31,12 +31,8 @@ const playBrainCalc = (userName) => {
 
     console.log(`Question: ${num1} ${operationObject.operation} ${num2}`);
     const userAnswer = readlineSync.question('Your answer: ');
-    if (rightAnswer === parseInt(userAnswer, 10)) {
-      console.log('Correct!');
-      iterAction.success();
-    } else {
-      console.log(`'${userAnswer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.`);
-      console.log(`Let's try again, ${userName}!`);
+    responseToUserAnswer(rightAnswer, parseInt(userAnswer, 10), userName);
+    if (!compareAnswer(rightAnswer, parseInt(userAnswer, 10))) {
       iterAction.fail();
     }
   };

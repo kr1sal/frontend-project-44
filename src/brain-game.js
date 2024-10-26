@@ -15,4 +15,15 @@ const playBrainGame = (startAction, iterAction, winAction, roundsCount = 3) => {
   });
 };
 
-export default playBrainGame;
+const compareAnswer = (rightAnswer, otherAnswer) => `${rightAnswer}`.trim() === `${otherAnswer}`.trim();
+
+const responseToUserAnswer = (rightAnswer, userAnswer, userName) => {
+  if (compareAnswer(rightAnswer, userAnswer)) {
+    console.log('Correct!');
+  } else {
+    console.log(`'${userAnswer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.`);
+    console.log(`Let's try again, ${userName}!`);
+  }
+};
+
+export { playBrainGame, compareAnswer, responseToUserAnswer };

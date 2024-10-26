@@ -1,5 +1,5 @@
 import readlineSync from 'readline-sync';
-import playBrainGame from '../brain-game.js';
+import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-game.js';
 import Action from '../action.js';
 
 const isPrime = (number) => {
@@ -25,12 +25,8 @@ const playBrainPrime = (userName) => {
 
     console.log(`Question: ${question}`);
     const userAnswer = readlineSync.question('Your answer: ');
-    if (rightAnswer === userAnswer) {
-      console.log('Correct!');
-      iterAction.success();
-    } else {
-      console.log(`'${userAnswer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.`);
-      console.log(`Let's try again, ${userName}!`);
+    responseToUserAnswer(rightAnswer, userAnswer, userName);
+    if (!compareAnswer(rightAnswer, userAnswer)) {
       iterAction.fail();
     }
   };
