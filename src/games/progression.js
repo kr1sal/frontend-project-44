@@ -26,8 +26,8 @@ const playBrainProgression = (userName) => {
 
     console.log(`Question: ${progressionWithUnknownNum.join(' ')}`);
     const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, parseInt(userAnswer, 10), userName);
-    if (!compareAnswer(rightAnswer, parseInt(userAnswer, 10))) {
+    responseToUserAnswer(rightAnswer, userAnswer, userName);
+    if (!compareAnswer(rightAnswer, userAnswer)) {
       iterAction.fail();
     }
   };

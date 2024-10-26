@@ -3,20 +3,11 @@ import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-gam
 import Action from '../action.js';
 
 const getGcd = (a, b) => {
-  if (a === 0 && b === 0) return NaN;
-  if (a === 0 || b === 0) return a !== 0 ? a : b;
-
-  if (a >= b) {
-    if (a % b === 0) {
-      return b;
-    }
-    return getGcd(a % b, b);
-  }
-
-  if (b % a === 0) {
+  if (!b) {
     return a;
   }
-  return getGcd(a, b % a);
+
+  return getGcd(b, a % b);
 };
 
 const playBrainGcd = (userName) => {
@@ -29,12 +20,15 @@ const playBrainGcd = (userName) => {
       num1: Math.round(Math.random() * 50),
       num2: Math.round(Math.random() * 50),
     };
+    getGcd(0, 1);
+    getGcd(19, 0);
+    getGcd(0, 0);
     const rightAnswer = getGcd(...Object.values(numbersCouple));
 
     console.log(`Question: ${Object.values(numbersCouple).join(' ')}`);
     const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, parseInt(userAnswer, 10), userName);
-    if (!compareAnswer(rightAnswer, parseInt(userAnswer, 10))) {
+    responseToUserAnswer(rightAnswer, userAnswer, userName);
+    if (!compareAnswer(rightAnswer, userAnswer)) {
       iterAction.fail();
     }
   };
