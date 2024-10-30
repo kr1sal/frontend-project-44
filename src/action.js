@@ -28,24 +28,40 @@ class Action {
     this.#onFail = onFail;
   }
 
+  /**
+   * Execute the lambda passed or saved in the Action instance
+   * @param {function} lambda - saved in the instance by default
+   * @returns {boolean}
+   */
   execute(lambda = this.#lambda) {
-    if (typeof lambda !== 'function') throw Error('Action lambda must be a function.');
     lambda();
-    const isSuccess = this.#result;
+    const isSuccess = this.#result ?? true;
     this.#result = undefined;
-    return isSuccess ?? true;
+    if ((isSuccess === true) && (this.#onSuccess !== undefined)) this.#onSuccess();
+    else if ((isSuccess === false) && (this.#onFail !== undefined)) this.#onFail();
+    return isSuccess;
   }
 
-  success() {
-    if (this.#onSuccess) this.#onSuccess();
-    if (this.#result) throw Error('Action call more than 1 success and/or fail.');
+  /**
+   * Terminates the Action instance with a result of true and executes the onSuccess lambda
+   * @param {function} onSuccess - saved in the instance by default
+   * @returns {boolean}
+   */
+  success(onSuccess = this.#onSuccess) {
+    if (this.#result !== undefined) throw Error('Action call more than 1 success and/or fail.');
+    this.#onSuccess = onSuccess;
     this.#result = true;
     return true;
   }
 
-  fail() {
-    if (this.#onFail) this.#onFail();
-    if (this.#result) throw Error('Action call more than 1 success and/or fail.');
+  /**
+   * Terminates the Action instance with a result of false and executes the onFail lambda
+   * @param {function} onFail - saved in the instance by default
+   * @returns {boolean}
+   */
+  fail(onFail = this.#onFail) {
+    if (this.#result !== undefined) throw Error('Action call more than 1 success and/or fail.');
+    this.#onFail = onFail;
     this.#result = false;
     return false;
   }
