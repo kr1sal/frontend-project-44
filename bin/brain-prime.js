@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import greet from '../src/cli.js';
-import playBrainPrime from '../src/games/prime.js';
+import { playPrimeGame } from '../src/brain-play.js';
 
-const userName = greet();
-playBrainPrime(userName);
+playPrimeGame();

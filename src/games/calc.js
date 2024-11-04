@@ -1,46 +1,44 @@
-import readlineSync from 'readline-sync';
-import { compareAnswer, playBrainGame, responseToUserAnswer } from '../brain-game.js';
-import Action from '../action.js';
+import BrainGame from '../brain-game.js';
+import * as brainInterface from '../brain-interface.js';
+import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
 
-const operations = [
-  {
-    operation: '+',
-    lambda: (a, b) => a + b,
-  },
-  {
-    operation: '-',
-    lambda: (a, b) => a - b,
-  },
-  {
-    operation: '*',
-    lambda: (a, b) => a * b,
-  },
-];
+class CalcGame extends BrainGame {
+  #operations = [
+    {
+      operation: '+',
+      lambda: (a, b) => a + b,
+    },
+    {
+      operation: '-',
+      lambda: (a, b) => a - b,
+    },
+    {
+      operation: '*',
+      lambda: (a, b) => a * b,
+    },
+  ];
 
-const playBrainCalc = (userName) => {
-  const startAction = new Action();
-  startAction.lambda = () => console.log('What is the result of the expression?');
+  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+    super(userName, roundsCount, difficultyMode);
 
-  const iterAction = new Action();
-  iterAction.lambda = () => {
-    const num1 = Math.round(Math.random() * 10);
-    const num2 = Math.round(Math.random() * 10);
-    const operationIndex = Math.floor(Math.random() * 3, 10);
-    const operationObject = operations[operationIndex];
-    const rightAnswer = operationObject.lambda(num1, num2);
+    this.startAction.lambda = () => brainInterface.describeGame('What is the result of the expression?');
+  
+    this.iterAction.lambda = () => {
+      const num1 = Math.round(Math.random() * this.difficultyMode);
+      const num2 = Math.round(Math.random() * this.difficultyMode);
+      const operationsCount = Object.keys(this.#operations).length;
+      const operationIndex = Math.floor(Math.random() * operationsCount, 10);
+      const operationObject = this.#operations[operationIndex];
+      const rightAnswer = operationObject.lambda(num1, num2);
+      
+      brainInterface.askQuestion(`Question: ${num1} ${operationObject.operation} ${num2}`)
+      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+        this.iterAction.fail();
+      }
+    };
+  
+    this.winAction.lambda = () => brainInterface.congratulateUser(userName);
+  }
+}
 
-    console.log(`Question: ${num1} ${operationObject.operation} ${num2}`);
-    const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, userAnswer, userName);
-    if (!compareAnswer(rightAnswer, userAnswer)) {
-      iterAction.fail();
-    }
-  };
-
-  const winAction = new Action();
-  winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
-
-  return playBrainGame(startAction, iterAction, winAction);
-};
-
-export default playBrainCalc;
+export default CalcGame;

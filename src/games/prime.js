@@ -1,6 +1,6 @@
-import readlineSync from 'readline-sync';
-import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-game.js';
-import Action from '../action.js';
+import BrainGame from '../brain-game.js';
+import * as brainInterface from '../brain-interface.js';
+import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
 
 const isPrime = (number) => {
   if (number === 0 || number === 1) return false;
@@ -13,27 +13,24 @@ const isPrime = (number) => {
   return true;
 };
 
-const playBrainPrime = (userName) => {
-  const startAction = new Action();
-  startAction.lambda = () => console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
+class PrimeGame extends BrainGame {
+  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+    super(userName, roundsCount, difficultyMode);
 
-  const iterAction = new Action();
-  iterAction.lambda = () => {
-    const number = Math.floor(Math.random() * 100);
-    const rightAnswer = isPrime(number) ? 'yes' : 'no';
+    this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if given number is prime. Otherwise answer "no".');
+  
+    this.iterAction.lambda = () => {
+      const number = Math.floor(Math.random() * 100);
+      const rightAnswer = isPrime(number) ? 'yes' : 'no';
+      
+      brainInterface.askQuestion(`Question: ${number}`)
+      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+        this.iterAction.fail();
+      }
+    };
 
-    console.log(`Question: ${number}`);
-    const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, userAnswer, userName);
-    if (!compareAnswer(rightAnswer, userAnswer)) {
-      iterAction.fail();
-    }
-  };
+    this.winAction.lambda = () => brainInterface.congratulateUser(userName);
+  }
+}
 
-  const winAction = new Action();
-  winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
-
-  return playBrainGame(startAction, iterAction, winAction);
-};
-
-export default playBrainPrime;
+export default PrimeGame;

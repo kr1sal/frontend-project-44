@@ -1,30 +1,27 @@
-import readlineSync from 'readline-sync';
-import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-game.js';
-import Action from '../action.js';
+import BrainGame from '../brain-game.js';
+import * as brainInterface from '../brain-interface.js';
+import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
 
 const isEven = (num) => num % 2 === 0;
 
-const playBrainEven = (userName) => {
-  const startAction = new Action();
-  startAction.lambda = () => console.log('Answer "yes" if the number is even, otherwise answer "no".');
+class EvenGame extends BrainGame {
+  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+    super(userName, roundsCount, difficultyMode);
 
-  const iterAction = new Action();
-  iterAction.lambda = () => {
-    const num = Math.round(Math.random() * 1000);
-    const rightAnswer = isEven(num) ? 'yes' : 'no';
+    this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if the number is even, otherwise answer "no".');
+  
+    this.iterAction.lambda = () => {
+      const num = Math.round(Math.random() * this.difficultyMode);
+      const rightAnswer = isEven(num) ? 'yes' : 'no';
+      
+      brainInterface.askQuestion(`Question: ${num}`)
+      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+        this.iterAction.fail();
+      }
+    };
 
-    console.log(`Question: ${num}`);
-    const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, userAnswer, userName);
-    if (!compareAnswer(rightAnswer, userAnswer)) {
-      iterAction.fail();
-    }
-  };
+    this.winAction.lambda = () => brainInterface.congratulateUser(userName);
+  }
+}
 
-  const winAction = new Action();
-  winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
-
-  return playBrainGame(startAction, iterAction, winAction);
-};
-
-export default playBrainEven;
+export default EvenGame;

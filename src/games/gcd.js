@@ -1,6 +1,6 @@
-import readlineSync from 'readline-sync';
-import { playBrainGame, compareAnswer, responseToUserAnswer } from '../brain-game.js';
-import Action from '../action.js';
+import BrainGame from '../brain-game.js';
+import * as brainInterface from '../brain-interface.js';
+import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
 
 const getGcd = (a, b) => {
   if (!b) {
@@ -10,30 +10,25 @@ const getGcd = (a, b) => {
   return getGcd(b, a % b);
 };
 
-const playBrainGcd = (userName) => {
-  const startAction = new Action();
-  startAction.lambda = () => console.log('Find the greatest common divisor of given numbers.');
+class GcdGame extends BrainGame {
+  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+    super(userName, roundsCount, difficultyMode);
 
-  const iterAction = new Action();
-  iterAction.lambda = () => {
-    const numbersCouple = {
-      num1: Math.round(Math.random() * 50),
-      num2: Math.round(Math.random() * 50),
+    this.startAction.lambda = () => brainInterface.describeGame('Find the greatest common divisor of given numbers.');
+  
+    this.iterAction.lambda = () => {
+      const num1 = Math.round(Math.random() * this.difficultyMode);
+      const num2 = Math.round(Math.random() * this.difficultyMode);
+      const rightAnswer = getGcd(num1, num2);
+      
+      brainInterface.askQuestion(`Question: ${num1} ${num2}`)
+      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+        this.iterAction.fail();
+      }
     };
-    const rightAnswer = getGcd(...Object.values(numbersCouple));
 
-    console.log(`Question: ${Object.values(numbersCouple).join(' ')}`);
-    const userAnswer = readlineSync.question('Your answer: ');
-    responseToUserAnswer(rightAnswer, userAnswer, userName);
-    if (!compareAnswer(rightAnswer, userAnswer)) {
-      iterAction.fail();
-    }
-  };
+    this.winAction.lambda = () => brainInterface.congratulateUser(userName);
+  }
+}
 
-  const winAction = new Action();
-  winAction.lambda = () => console.log(`Congratulations, ${userName}!`);
-
-  return playBrainGame(startAction, iterAction, winAction);
-};
-
-export default playBrainGcd;
+export default GcdGame;

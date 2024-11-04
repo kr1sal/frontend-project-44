@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import greet from '../src/cli.js';
-import playBrainGcd from '../src/games/gcd.js';
+import { playGcdGame } from '../src/brain-play.js';
 
-const userName = greet();
-playBrainGcd(userName);
+playGcdGame();
