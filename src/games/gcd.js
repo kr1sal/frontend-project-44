@@ -11,17 +11,21 @@ const getGcd = (a, b) => {
 };
 
 class GcdGame extends BrainGame {
-  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+  constructor(
+    userName = defaultUserName,
+    roundsCount = defaultRoundsCount,
+    difficultyMode = defaultDifficultyMode,
+  ) {
     super(userName, roundsCount, difficultyMode);
 
     this.startAction.lambda = () => brainInterface.describeGame('Find the greatest common divisor of given numbers.');
-  
+
     this.iterAction.lambda = () => {
       const num1 = Math.round(Math.random() * this.difficultyMode);
       const num2 = Math.round(Math.random() * this.difficultyMode);
       const rightAnswer = getGcd(num1, num2);
-      
-      brainInterface.askQuestion(`Question: ${num1} ${num2}`)
+
+      brainInterface.askQuestion(`Question: ${num1} ${num2}`);
       if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
         this.iterAction.fail();
       }

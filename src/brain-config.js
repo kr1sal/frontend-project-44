@@ -1,8 +1,8 @@
 const difficulty = {
-    easy: 10,
-    normal: 50,
-    hard: 100,
-    insane: 1000,
+  easy: 10,
+  normal: 50,
+  hard: 100,
+  insane: 1000,
 };
 
 const defaultDifficultyMode = difficulty.easy;

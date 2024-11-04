@@ -5,16 +5,20 @@ import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../b
 const isEven = (num) => num % 2 === 0;
 
 class EvenGame extends BrainGame {
-  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+  constructor(
+    userName = defaultUserName,
+    roundsCount = defaultRoundsCount,
+    difficultyMode = defaultDifficultyMode,
+  ) {
     super(userName, roundsCount, difficultyMode);
 
     this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if the number is even, otherwise answer "no".');
-  
+
     this.iterAction.lambda = () => {
       const num = Math.round(Math.random() * this.difficultyMode);
       const rightAnswer = isEven(num) ? 'yes' : 'no';
-      
-      brainInterface.askQuestion(`Question: ${num}`)
+
+      brainInterface.askQuestion(`Question: ${num}`);
       if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
         this.iterAction.fail();
       }

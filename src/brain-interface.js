@@ -7,10 +7,10 @@ const getUserName = () => readlineSync.question('May I have your name? ');
 const greetUserName = (userName) => console.log(`Hello, ${userName}!`);
 
 const askUserName = () => {
-    const userName = getUserName();
-    greetUserName(userName);
-    return userName;
-}
+  const userName = getUserName();
+  greetUserName(userName);
+  return userName;
+};
 
 const describeGame = (description) => console.log(description);
 
@@ -31,10 +31,12 @@ const respondToUser = (userName, rightAnswer, userAnswer) => {
 };
 
 const askUserAnswer = (userName, rightAnswer) => {
-    const userAnswer = receiveUserAnswer();
-    return respondToUser(userName, rightAnswer, userAnswer);
-}
+  const userAnswer = receiveUserAnswer();
+  return respondToUser(userName, rightAnswer, userAnswer);
+};
 
 const congratulateUser = (userName) => console.log(`Congratulations, ${userName}!`);
 
-export { welcome, askUserName, describeGame, askQuestion, askUserAnswer, congratulateUser }
+export {
+  welcome, askUserName, describeGame, askQuestion, askUserAnswer, congratulateUser,
+};

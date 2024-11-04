@@ -14,16 +14,20 @@ const isPrime = (number) => {
 };
 
 class PrimeGame extends BrainGame {
-  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+  constructor(
+    userName = defaultUserName,
+    roundsCount = defaultRoundsCount,
+    difficultyMode = defaultDifficultyMode,
+  ) {
     super(userName, roundsCount, difficultyMode);
 
     this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if given number is prime. Otherwise answer "no".');
-  
+
     this.iterAction.lambda = () => {
       const number = Math.floor(Math.random() * 100);
       const rightAnswer = isPrime(number) ? 'yes' : 'no';
-      
-      brainInterface.askQuestion(`Question: ${number}`)
+
+      brainInterface.askQuestion(`Question: ${number}`);
       if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
         this.iterAction.fail();
       }

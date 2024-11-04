@@ -11,11 +11,15 @@ const getProgression = (length, start, step) => {
 };
 
 class ProgressionGame extends BrainGame {
-  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+  constructor(
+    userName = defaultUserName,
+    roundsCount = defaultRoundsCount,
+    difficultyMode = defaultDifficultyMode,
+  ) {
     super(userName, roundsCount, difficultyMode);
 
     this.startAction.lambda = () => brainInterface.describeGame('What number is missing in the progression?');
-  
+
     this.iterAction.lambda = () => {
       const progressionLength = 10;
       const progressionStart = Math.round(Math.random() * 10);
@@ -24,8 +28,8 @@ class ProgressionGame extends BrainGame {
       const numberIndex = Math.floor(Math.random() * 10);
       const rightAnswer = progression[numberIndex];
       const progressionWithUnknownNum = progression.map((element) => (element === progression[numberIndex] ? '..' : element));
-      
-      brainInterface.askQuestion(`Question: ${progressionWithUnknownNum.join(' ')}`)
+
+      brainInterface.askQuestion(`Question: ${progressionWithUnknownNum.join(' ')}`);
       if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
         this.iterAction.fail();
       }

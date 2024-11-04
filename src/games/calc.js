@@ -18,11 +18,15 @@ class CalcGame extends BrainGame {
     },
   ];
 
-  constructor(userName = defaultUserName, roundsCount = defaultRoundsCount, difficultyMode = defaultDifficultyMode) {
+  constructor(
+    userName = defaultUserName,
+    roundsCount = defaultRoundsCount,
+    difficultyMode = defaultDifficultyMode,
+  ) {
     super(userName, roundsCount, difficultyMode);
 
     this.startAction.lambda = () => brainInterface.describeGame('What is the result of the expression?');
-  
+
     this.iterAction.lambda = () => {
       const num1 = Math.round(Math.random() * this.difficultyMode);
       const num2 = Math.round(Math.random() * this.difficultyMode);
@@ -30,13 +34,13 @@ class CalcGame extends BrainGame {
       const operationIndex = Math.floor(Math.random() * operationsCount, 10);
       const operationObject = this.#operations[operationIndex];
       const rightAnswer = operationObject.lambda(num1, num2);
-      
-      brainInterface.askQuestion(`Question: ${num1} ${operationObject.operation} ${num2}`)
+
+      brainInterface.askQuestion(`Question: ${num1} ${operationObject.operation} ${num2}`);
       if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
         this.iterAction.fail();
       }
     };
-  
+
     this.winAction.lambda = () => brainInterface.congratulateUser(userName);
   }
 }
