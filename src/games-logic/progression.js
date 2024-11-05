@@ -33,7 +33,7 @@ class ProgressionGame extends BrainGame {
       const rightAnswer = progression[numberIndex];
       const progressionWithUnknownNum = progression.map((element) => (element === progression[numberIndex] ? '..' : element));
 
-      brainInterface.askQuestion(`Question: ${progressionWithUnknownNum.join(' ')}`);
+      brainInterface.askQuestion(`${progressionWithUnknownNum.join(' ')}`);
       if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }

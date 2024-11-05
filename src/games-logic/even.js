@@ -21,7 +21,7 @@ class EvenGame extends BrainGame {
       const num = randint(0, getDifficultyModeValue(difficultyMode)) * 2;
       const rightAnswer = isEven(num) ? 'yes' : 'no';
 
-      brainInterface.askQuestion(`Question: ${num}`);
+      brainInterface.askQuestion(`${num}`);
       if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }

@@ -29,7 +29,7 @@ class GcdGame extends BrainGame {
       const num2 = randint(0, difficultyModeValue);
       const rightAnswer = getGcd(num1, num2);
 
-      brainInterface.askQuestion(`Question: ${num1} ${num2}`);
+      brainInterface.askQuestion(`${num1} ${num2}`);
       if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }

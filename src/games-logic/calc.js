@@ -42,7 +42,7 @@ class CalcGame extends BrainGame {
       const operationObject = this.#operations[operationIndex];
       const rightAnswer = operationObject.lambda(num1, num2);
 
-      brainInterface.askQuestion(`Question: ${num1} ${operationObject.operation} ${num2}`);
+      brainInterface.askQuestion(`${num1} ${operationObject.operation} ${num2}`);
       if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }
