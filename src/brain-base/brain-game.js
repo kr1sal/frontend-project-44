@@ -1,5 +1,5 @@
 import Action from './action.js';
-import { defaultDifficultyMode, defaultRoundsCount, defaultUserName } from './brain-config.js';
+import { defaultRoundsCount } from '../brain-config.js';
 
 class BrainGame extends Action {
   startAction;
@@ -15,9 +15,7 @@ class BrainGame extends Action {
   userName;
 
   constructor(
-    userName = defaultUserName,
     roundsCount = defaultRoundsCount,
-    difficultyMode = defaultDifficultyMode,
   ) {
     super();
 
@@ -37,9 +35,7 @@ class BrainGame extends Action {
     this.iterAction = new Action();
     this.winAction = new Action();
 
-    this.userName = userName;
     this.roundsCount = roundsCount;
-    this.difficultyMode = difficultyMode;
   }
 }
 

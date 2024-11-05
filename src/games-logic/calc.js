@@ -1,6 +1,12 @@
-import BrainGame from '../brain-game.js';
+import { randint } from '../utils.js';
+import BrainGame from '../brain-base/brain-game.js';
 import * as brainInterface from '../brain-interface.js';
-import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
+import {
+  getDifficultyModeValue,
+  defaultUserName,
+  defaultRoundsCount,
+  defaultDifficultyMode,
+} from '../brain-config.js';
 
 class CalcGame extends BrainGame {
   #operations = [
@@ -20,23 +26,24 @@ class CalcGame extends BrainGame {
 
   constructor(
     userName = defaultUserName,
-    roundsCount = defaultRoundsCount,
     difficultyMode = defaultDifficultyMode,
+    roundsCount = defaultRoundsCount,
   ) {
-    super(userName, roundsCount, difficultyMode);
+    super(roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('What is the result of the expression?');
 
     this.iterAction.lambda = () => {
-      const num1 = Math.round(Math.random() * this.difficultyMode);
-      const num2 = Math.round(Math.random() * this.difficultyMode);
+      const difficultyModeValue = getDifficultyModeValue(difficultyMode);
+      const num1 = randint(0, difficultyModeValue);
+      const num2 = randint(0, difficultyModeValue);
       const operationsCount = Object.keys(this.#operations).length;
       const operationIndex = Math.floor(Math.random() * operationsCount, 10);
       const operationObject = this.#operations[operationIndex];
       const rightAnswer = operationObject.lambda(num1, num2);
 
       brainInterface.askQuestion(`Question: ${num1} ${operationObject.operation} ${num2}`);
-      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+      if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }
     };

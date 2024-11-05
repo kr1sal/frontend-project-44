@@ -1,6 +1,9 @@
-import BrainGame from '../brain-game.js';
+import { randint } from '../utils.js';
+import BrainGame from '../brain-base/brain-game.js';
 import * as brainInterface from '../brain-interface.js';
-import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
+import {
+  getDifficultyModeValue, defaultUserName, defaultRoundsCount, defaultDifficultyMode,
+} from '../brain-config.js';
 
 const getProgression = (length, start, step) => {
   const progression = [];
@@ -13,24 +16,25 @@ const getProgression = (length, start, step) => {
 class ProgressionGame extends BrainGame {
   constructor(
     userName = defaultUserName,
-    roundsCount = defaultRoundsCount,
     difficultyMode = defaultDifficultyMode,
+    roundsCount = defaultRoundsCount,
   ) {
-    super(userName, roundsCount, difficultyMode);
+    super(roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('What number is missing in the progression?');
 
     this.iterAction.lambda = () => {
       const progressionLength = 10;
-      const progressionStart = Math.round(Math.random() * 10);
-      const progressionStep = Math.round(Math.random() * 10) + 1;
+      const difficultyModeValue = getDifficultyModeValue(difficultyMode) / 5;
+      const progressionStart = randint(0, difficultyModeValue);
+      const progressionStep = randint(0, difficultyModeValue) + 1;
       const progression = getProgression(progressionLength, progressionStart, progressionStep);
-      const numberIndex = Math.floor(Math.random() * 10);
+      const numberIndex = randint(1, 9);
       const rightAnswer = progression[numberIndex];
       const progressionWithUnknownNum = progression.map((element) => (element === progression[numberIndex] ? '..' : element));
 
       brainInterface.askQuestion(`Question: ${progressionWithUnknownNum.join(' ')}`);
-      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+      if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }
     };

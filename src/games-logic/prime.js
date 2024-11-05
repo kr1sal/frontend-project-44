@@ -1,6 +1,9 @@
-import BrainGame from '../brain-game.js';
+import { randint } from '../utils.js';
+import BrainGame from '../brain-base/brain-game.js';
 import * as brainInterface from '../brain-interface.js';
-import { defaultUserName, defaultRoundsCount, defaultDifficultyMode } from '../brain-config.js';
+import {
+  getDifficultyModeValue, defaultUserName, defaultRoundsCount, defaultDifficultyMode,
+} from '../brain-config.js';
 
 const isPrime = (number) => {
   if (number === 0 || number === 1) return false;
@@ -16,19 +19,19 @@ const isPrime = (number) => {
 class PrimeGame extends BrainGame {
   constructor(
     userName = defaultUserName,
-    roundsCount = defaultRoundsCount,
     difficultyMode = defaultDifficultyMode,
+    roundsCount = defaultRoundsCount,
   ) {
-    super(userName, roundsCount, difficultyMode);
+    super(roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if given number is prime. Otherwise answer "no".');
 
     this.iterAction.lambda = () => {
-      const number = Math.floor(Math.random() * 100);
-      const rightAnswer = isPrime(number) ? 'yes' : 'no';
+      const num = randint(0, getDifficultyModeValue(difficultyMode)) * 2;
+      const rightAnswer = isPrime(num) ? 'yes' : 'no';
 
-      brainInterface.askQuestion(`Question: ${number}`);
-      if (!brainInterface.askUserAnswer(this.userName, rightAnswer)) {
+      brainInterface.askQuestion(`Question: ${num}`);
+      if (!brainInterface.askUserAnswer(userName, rightAnswer)) {
         this.iterAction.fail();
       }
     };
