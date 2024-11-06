@@ -29,6 +29,16 @@ class Action {
   }
 
   /**
+   * Сalled when an instance of a class is created
+   * @param {function} lambda - saved in the instance by default
+   */
+  constructor(lambda = () => {}) {
+    this.#lambda = lambda;
+    this.#onSuccess = () => {};
+    this.#onFail = () => {};
+  }
+
+  /**
    * Execute the lambda passed or saved in the Action instance
    * @param {function} lambda - saved in the instance by default
    * @returns {boolean}
@@ -37,8 +47,8 @@ class Action {
     lambda();
     const isSuccess = this.#result ?? true;
     this.#result = undefined;
-    if ((isSuccess === true) && (this.#onSuccess !== undefined)) this.#onSuccess();
-    else if ((isSuccess === false) && (this.#onFail !== undefined)) this.#onFail();
+    if (isSuccess === true) this.#onSuccess();
+    else this.#onFail();
     return isSuccess;
   }
 

@@ -19,6 +19,10 @@ class BrainGame extends Action {
   ) {
     super();
 
+    this.startAction = new Action();
+    this.iterAction = new Action();
+    this.winAction = new Action();
+
     this.lambda = () => {
       const startActionIsSuccess = this.startAction.execute();
       if (!startActionIsSuccess) return this.fail();
@@ -30,10 +34,6 @@ class BrainGame extends Action {
 
       return this.winAction.execute();
     };
-
-    this.startAction = new Action();
-    this.iterAction = new Action();
-    this.winAction = new Action();
 
     this.roundsCount = roundsCount;
   }
