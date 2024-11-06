@@ -2,10 +2,7 @@ import { randint } from '../utils.js';
 import BrainGame from '../brain-base/brain-game.js';
 import * as brainInterface from '../brain-interface.js';
 import {
-  getDifficultyModeValue,
-  defaultUserName,
-  defaultRoundsCount,
-  defaultDifficultyMode,
+  getDifficultyModeValue, defaultUserName, defaultRoundsCount, defaultDifficultyMode,
 } from '../brain-config.js';
 
 class CalcGame extends BrainGame {

@@ -1,10 +1,7 @@
 import readlineSync from 'readline-sync';
 import { compareStrings } from './utils.js';
 import {
-  getDifficultyModesNames,
-  getDifficultyMode,
-  getDifficultyModeName,
-  defaultDifficultyMode,
+  getDifficultyModesNames, getDifficultyMode, getDifficultyModeName, defaultDifficultyMode,
 } from './brain-config.js';
 
 const welcome = () => console.log('Welcome to the Brain Games!');
@@ -69,13 +66,6 @@ const printGameStatistics = (difficultyMode, RightAsnwersCount, WrongAsnwersCoun
 };
 
 export {
-  welcome,
-  askUserName,
-  describeGame,
-  askQuestion,
-  askUserAnswer,
-  congratulateUser,
-  askUserDifficultyMode,
-  separateOutput,
-  printGameStatistics,
+  welcome, askUserName, describeGame, askQuestion, askUserAnswer, congratulateUser,
+  askUserDifficultyMode, separateOutput, printGameStatistics,
 };

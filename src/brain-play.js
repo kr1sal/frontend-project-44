@@ -87,10 +87,6 @@ const playImprovedBrainGames = () => {
 };
 
 export {
-  playCalcGame,
-  playEvenGame,
-  playGcdGame,
-  playPrimeGame,
-  playProgressionGame,
+  playCalcGame, playEvenGame, playGcdGame, playPrimeGame, playProgressionGame,
   playImprovedBrainGames,
 };

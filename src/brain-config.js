@@ -34,12 +34,6 @@ const defaultRoundsCount = 3;
 const defaultUserName = 'Anon';
 
 export {
-  getDifficultyModes,
-  getDifficultyModesNames,
-  getDifficultyMode,
-  getDifficultyModeName,
-  getDifficultyModeValue,
-  defaultUserName,
-  defaultDifficultyMode,
-  defaultRoundsCount,
+  getDifficultyModes, getDifficultyModesNames, getDifficultyMode, getDifficultyModeName,
+  getDifficultyModeValue, defaultUserName, defaultDifficultyMode, defaultRoundsCount,
 };
