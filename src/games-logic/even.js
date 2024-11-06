@@ -13,7 +13,7 @@ class EvenGame extends BrainGame {
     difficultyMode = defaultDifficultyMode,
     roundsCount = defaultRoundsCount,
   ) {
-    super(roundsCount);
+    super('brain-even', roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if the number is even, otherwise answer "no".');
 

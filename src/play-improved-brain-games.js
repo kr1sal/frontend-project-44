@@ -1,54 +1,54 @@
 import * as brainInterface from './brain-interface.js';
-import CalcGame from './games-logic/calc.js';
-import EvenGame from './games-logic/even.js';
-import GcdGame from './games-logic/gcd.js';
-import PrimeGame from './games-logic/prime.js';
-import ProgressionGame from './games-logic/progression.js';
+import { normalizeString } from './utils.js';
 
-const playImprovedBrainGames = () => {
-  brainInterface.welcome();
+const playImprovedBrainGames = (...brainGames) => {
+  brainInterface.printIbg();
   const userName = brainInterface.askUserName();
   const difficultyMode = brainInterface.askUserDifficultyMode();
   let RightAsnwersCount = 0;
   let WrongAsnwersCount = 0;
 
-  const onSuccess = () => {
-    RightAsnwersCount += 1;
-    brainInterface.separateOutput();
-  };
-  const onFail = () => {
-    WrongAsnwersCount += 1;
-    brainInterface.separateOutput();
-  };
-  brainInterface.separateOutput();
+  const availableBrainGames = {};
+  brainGames.forEach((BrainGame) => {
+    const brainGame = new BrainGame(userName, difficultyMode);
+    brainGame.iterAction.onSuccess = () => {
+      RightAsnwersCount += 1;
+    };
+    brainGame.iterAction.onFail = () => {
+      WrongAsnwersCount += 1;
+    };
+    availableBrainGames[normalizeString(brainGame.gameName)] = brainGame;
+  });
+  const availableBrainGamesNames = Object.keys(availableBrainGames);
 
-  const calcGame = new CalcGame(userName, difficultyMode);
-  calcGame.onSuccess = onSuccess;
-  calcGame.onFail = onFail;
-  calcGame.execute();
+  brainInterface.separateOutput(2);
 
-  const evenGame = new EvenGame(userName, difficultyMode);
-  evenGame.onSuccess = onSuccess;
-  evenGame.onFail = onFail;
-  evenGame.execute();
+  let userInput;
+  while (userInput !== 'quit') {
+    userInput = normalizeString(brainInterface.input());
+    if (userInput === 'help') {
+      brainInterface.printHelp();
+      brainInterface.separateOutput(1);
+    } else if (userInput === 'games-list') {
+      brainInterface.printAvailableBrainGames(...availableBrainGamesNames);
+      brainInterface.separateOutput(1);
+    } else if (userInput === 'statistics') {
+      brainInterface.printGameStatistics(
+        userName,
+        difficultyMode,
+        RightAsnwersCount,
+        WrongAsnwersCount,
+      );
+      brainInterface.separateOutput(1);
+    } else if (availableBrainGamesNames.includes(userInput)) {
+      const brainGame = availableBrainGames[userInput];
+      brainGame.execute();
+      brainInterface.separateOutput(1);
+    }
+  }
 
-  const gcdGame = new GcdGame(userName, difficultyMode);
-  gcdGame.onSuccess = onSuccess;
-  gcdGame.onFail = onFail;
-  gcdGame.execute();
-
-  const primeGame = new PrimeGame(userName, difficultyMode);
-  primeGame.onSuccess = onSuccess;
-  primeGame.onFail = onFail;
-  primeGame.execute();
-
-  const progressionGame = new ProgressionGame(userName, difficultyMode);
-  progressionGame.onSuccess = onSuccess;
-  progressionGame.onFail = onFail;
-  progressionGame.execute();
-
-  brainInterface.printGameStatistics(difficultyMode, RightAsnwersCount, WrongAsnwersCount);
-  brainInterface.separateOutput();
+  brainInterface.goodbye(userName);
+  brainInterface.separateOutput(1);
 };
 
 export default playImprovedBrainGames;

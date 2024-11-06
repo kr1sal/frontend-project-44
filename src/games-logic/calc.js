@@ -26,7 +26,7 @@ class CalcGame extends BrainGame {
     difficultyMode = defaultDifficultyMode,
     roundsCount = defaultRoundsCount,
   ) {
-    super(roundsCount);
+    super('brain-calc', roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('What is the result of the expression?');
 

@@ -19,7 +19,7 @@ class GcdGame extends BrainGame {
     difficultyMode = defaultDifficultyMode,
     roundsCount = defaultRoundsCount,
   ) {
-    super(roundsCount);
+    super('brain-gcd', roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('Find the greatest common divisor of given numbers.');
 

@@ -22,7 +22,7 @@ class PrimeGame extends BrainGame {
     difficultyMode = defaultDifficultyMode,
     roundsCount = defaultRoundsCount,
   ) {
-    super(roundsCount);
+    super('brain-prime', roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('Answer "yes" if given number is prime. Otherwise answer "no".');
 

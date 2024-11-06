@@ -2,6 +2,8 @@ import Action from './action.js';
 import { defaultRoundsCount } from '../brain-config.js';
 
 class BrainGame extends Action {
+  #gameName;
+
   startAction;
 
   iterAction;
@@ -14,10 +16,20 @@ class BrainGame extends Action {
 
   userName;
 
+  /**
+   * @returns {string}
+   */
+  get gameName() {
+    return this.#gameName;
+  }
+
   constructor(
+    gameName,
     roundsCount = defaultRoundsCount,
   ) {
     super();
+
+    this.#gameName = gameName;
 
     this.startAction = new Action();
     this.iterAction = new Action();

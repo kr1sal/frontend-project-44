@@ -1,5 +1,11 @@
 const randint = (fromNum, toNum) => Math.floor(Math.random() * (toNum - fromNum)) + fromNum;
 
-const compareStrings = (firstString, secondString) => firstString.trim() === secondString.trim();
+const normalizeString = (string) => string.trim().toLowerCase();
 
-export { randint, compareStrings };
+const compareStrings = (firstString, secondString) => {
+  const normalizedFirstString = normalizeString(firstString);
+  const normalizedSecondString = normalizeString(secondString);
+  return normalizedFirstString === normalizedSecondString;
+};
+
+export { randint, normalizeString, compareStrings };

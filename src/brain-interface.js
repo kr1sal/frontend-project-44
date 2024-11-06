@@ -22,10 +22,8 @@ const askQuestion = (question) => console.log(`Question: ${question}`);
 
 const receiveUserAnswer = () => readlineSync.question('Your answer: ');
 
-const compareAnswers = (rightAnswer, otherAnswer) => compareStrings(`${rightAnswer}`, `${otherAnswer}`);
-
 const respondToUser = (userName, rightAnswer, userAnswer) => {
-  if (!compareAnswers(rightAnswer, userAnswer)) {
+  if (!compareStrings(`${rightAnswer}`, `${userAnswer}`)) {
     console.log(`'${userAnswer}' is wrong answer ;(. Correct answer was '${rightAnswer}'.`);
     console.log(`Let's try again, ${userName}!`);
     return false;
@@ -57,15 +55,29 @@ const askUserDifficultyMode = () => {
   return userDifficultyMode;
 };
 
-const separateOutput = () => console.log('');
+const separateOutput = (count) => console.log('\n'.repeat(count - 1));
 
-const printGameStatistics = (difficultyMode, RightAsnwersCount, WrongAsnwersCount) => {
+const printIbg = () => console.log('Welcome to IBG - the Improved Brain Games! For help input "help".');
+
+const input = () => readlineSync.question('--> ');
+
+const printHelp = () => console.log('Commands:\nhelp - display help on ibg commands;\nquit - exit ibg;\ngames-list - display a list of available games. To play, enter the name of the game;\nstatistics - display statistics of the current session;');
+
+const printAvailableBrainGames = (...brainGamesNames) => {
+  console.log(`Available brain games: ${brainGamesNames.join(', ')}`);
+};
+
+const printGameStatistics = (userName, difficultyMode, RightAsnwersCount, WrongAsnwersCount) => {
+  console.log(`User name: ${userName}`);
   console.log(`Difficulty mode: ${getDifficultyModeName(difficultyMode)}`);
   console.log(`Right asnwers: ${RightAsnwersCount}`);
   console.log(`Wrong asnwers: ${WrongAsnwersCount}`);
 };
 
+const goodbye = (userName) => console.log(`Googbye, ${userName}`);
+
 export {
   welcome, askUserName, describeGame, askQuestion, askUserAnswer, congratulateUser,
-  askUserDifficultyMode, separateOutput, printGameStatistics,
+  askUserDifficultyMode, separateOutput, printAvailableBrainGames, printIbg, input, printHelp,
+  printGameStatistics, goodbye,
 };

@@ -19,7 +19,7 @@ class ProgressionGame extends BrainGame {
     difficultyMode = defaultDifficultyMode,
     roundsCount = defaultRoundsCount,
   ) {
-    super(roundsCount);
+    super('brain-progression', roundsCount);
 
     this.startAction.lambda = () => brainInterface.describeGame('What number is missing in the progression?');
 
