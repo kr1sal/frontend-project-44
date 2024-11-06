@@ -5,41 +5,6 @@ import GcdGame from './games-logic/gcd.js';
 import PrimeGame from './games-logic/prime.js';
 import ProgressionGame from './games-logic/progression.js';
 
-const playCalcGame = () => {
-  brainInterface.welcome();
-  const userName = brainInterface.askUserName();
-  const calcGame = new CalcGame(userName);
-  calcGame.execute();
-};
-
-const playEvenGame = () => {
-  brainInterface.welcome();
-  const userName = brainInterface.askUserName();
-  const evenGame = new EvenGame(userName);
-  evenGame.execute();
-};
-
-const playGcdGame = () => {
-  brainInterface.welcome();
-  const userName = brainInterface.askUserName();
-  const gcdGame = new GcdGame(userName);
-  gcdGame.execute();
-};
-
-const playPrimeGame = () => {
-  brainInterface.welcome();
-  const userName = brainInterface.askUserName();
-  const primeGame = new PrimeGame(userName);
-  primeGame.execute();
-};
-
-const playProgressionGame = () => {
-  brainInterface.welcome();
-  const userName = brainInterface.askUserName();
-  const progressionGame = new ProgressionGame(userName);
-  progressionGame.execute();
-};
-
 const playImprovedBrainGames = () => {
   brainInterface.welcome();
   const userName = brainInterface.askUserName();
@@ -86,7 +51,4 @@ const playImprovedBrainGames = () => {
   brainInterface.separateOutput();
 };
 
-export {
-  playCalcGame, playEvenGame, playGcdGame, playPrimeGame, playProgressionGame,
-  playImprovedBrainGames,
-};
+export default playImprovedBrainGames;
