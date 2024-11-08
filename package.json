@@ -15,7 +15,9 @@
     "brain-calc": "bin/brain-calc.js",
     "brain-gcd": "bin/brain-gcd.js",
     "brain-progression": "bin/brain-progression.js",
-    "brain-prime": "bin/brain-prime.js"
+    "brain-prime": "bin/brain-prime.js",
+    "improved-brain-games": "bin/improved-brain-games.js",
+    "ibg": "bin/improved-brain-games.js"
   },
   "dependencies": {
     "readline-sync": "^1.4.10"
