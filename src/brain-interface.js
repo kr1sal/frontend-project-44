@@ -2,11 +2,16 @@ import readlineSync from 'readline-sync';
 import { compareStrings } from './utils.js';
 import {
   getDifficultyModesNames, getDifficultyMode, getDifficultyModeName, defaultDifficultyMode,
+  defaultUserName,
 } from './brain-config.js';
 
 const welcome = () => console.log('Welcome to the Brain Games!');
 
-const getUserName = () => readlineSync.question('May I have your name? ');
+const getUserName = () => {
+  const userName = readlineSync.question('May I have your name? ').trim();
+  if (userName === '') return defaultUserName;
+  return userName;
+};
 
 const greetUserName = (userName) => console.log(`Hello, ${userName}!`);
 
